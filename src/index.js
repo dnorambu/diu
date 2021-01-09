@@ -20,8 +20,8 @@ import '@material/mwc-icon-button';
 // Standard DOM APIs work with Web Components just like they do for
 // built-in elements.
 
-window.snacker.onclick = function () {
-    window.snack.stacked = false;
-    window.snack.leading = false;
-    window.snack.open = true;
-};
+// window.snacker.onclick = function () {
+//     window.snack.stacked = false;
+//     window.snack.leading = false;
+//     window.snack.open = true;
+// };

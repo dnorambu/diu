@@ -17,28 +17,28 @@
   </head>
   <body>
     <mwc-top-app-bar-fixed>
-      <mwc-icon-button icon="keyboard_arrow_left"slot="navigationIcon"></mwc-icon-button>
       <div slot="title">Pomodoro</div>
       <div><!-- content --></div>
     </mwc-top-app-bar-fixed>
     <div id="pagina-principal" class="pagina-principal">
-      <div id="add" class="center mt-mb">
+      <div id="add" class="center mt-mb-small">
         <div id="tarea-jornada" class="center">
           <!-- Botones para "Tarea" y "Jornada" -->
           <mwc-button onclick="AgregarTarea()" expandContent unelevated label="Tarea" icon="arrow_right"></mwc-button>
-          <mwc-button onclick="" unelevated label="Jornada" icon="arrow_right"></mwc-button>
+          <mwc-button onclick="AgregarJornada()" unelevated label="Jornada" icon="arrow_right"></mwc-button>
         </div>
-        <div id="lista" class="lista-tareas center-row">
+        <div id="lista" class="lista-tareas center-row mt-mb-small">
           <mwc-fab onclick="openAdd()" class="icon" mini icon="add"></mwc-fab>
           <mwc-select label="Tareas y Jornadas ^-^">
-            <!-- <mwc-list-item value="0">Tarea 1</mwc-list-item> -->
-            <!-- <mwc-list-item value="1">Tarea 2</mwc-list-item>
+            <!-- <mwc-list-item value="0">Tarea 1</mwc-list-item>
+            <mwc-list-item value="0">Jornada 1</mwc-list-item> -->
+            <!--<mwc-list-item value="1">Tarea 2</mwc-list-item>
             <mwc-list-item value="2">Tarea 3</mwc-list-item>
             <mwc-list-item value="3">Jornada 1</mwc-list-item> -->
           </mwc-select>
         </div>
       </div>
-      <div id="min-pom" class="container center mt-mb">
+      <div id="min-pom" class="container center mt-mb-medium">
         <mwc-slider
           step="5"
           pin
@@ -48,7 +48,7 @@
         </mwc-slider>
         <p class="texto center">Minutos Pomodoro</p>
       </div>
-      <div id="min-des" class="container center mt-mb">
+      <div id="min-des" class="container center mt-mb-medium">
         <mwc-slider 
           step="1"
           pin
@@ -75,54 +75,57 @@
       </div>
     </div>
     <!-- Botones que manejan al temporizador -->
+    <div id="finalizar-tarea" class="mt-mb-small">
+      <mwc-button onclick="FinalizarTarea()" raised icon="check" label="Tarea Finalizada"></mwc-button>
+    </div>
+    <div id="finalizar-jornada" class="mt-mb-small">
+      <mwc-button onclick="FinalizarJornada()" raised icon="check" label="Jornada Finalizada"></mwc-button>
+    </div>
     <div id="manage-time">
-        <mwc-button onclick="empezarDetener(this)" raised label="Reanudar" icon="play_arrow" trailingIcon></mwc-button>
-        <mwc-button onclick="pausar(this)" raised label="Pausa" icon="pause" trailingIcon></mwc-button>
-        <mwc-button onclick="cancelar(this)" raised label="Cancelar" icon="stop" trailingIcon></mwc-button>
+      <mwc-button onclick="empezarDetener()" raised label="Reanudar" icon="play_arrow" trailingIcon></mwc-button>
+      <mwc-button onclick="pausar()" raised label="Pausa" icon="pause" trailingIcon></mwc-button>
+      <mwc-button onclick="cancelar()" raised label="Cancelar" icon="stop" trailingIcon></mwc-button>
     </div>
     <!-- Pagina para agregar el nombre y descripcion de tarea -->
     <div id="agregar-tarea">
       <div class="center">
         <!-- Campos de texto para el nombre y descripcion de la tarea -->
-        <div id="tf-tarea" class="mt-mb">
+        <div id="tf-tarea" class="mt-mb-small">
           <mwc-textfield outlined required label="Tarea"></mwc-textfield>
         </div>
-        <div class="mt-mb">
+        <div class="mt-mb-small">
           <mwc-textarea outlined label="Descripcion"></mwc-textarea>
         </div>
         <div class="mt-mb">
-          <mwc-button onclick="ConfirmarAddTarea()" raised icon="check" label="Confirmar"></mwc-button>
+          <mwc-button id="confirmar" onclick="ConfirmarAddTarea()" raised icon="check" label="Confirmar"></mwc-button>
         </div>
       </div>
     </div>
+    <!-- Div Añadir jornada -->
     <div id="agregar-jornada">
-      <div class="mt-mb">
+      <div id="jornada-titulo" class="mt-mb center">
         <mwc-textfield outlined required label="Jornada"></mwc-textfield>
       </div>
-      <div class="mt-mb">
-        <mwc-textarea outlined label="Descripcion"></mwc-textarea>
+      <div class="center">
+        <mwc-formfield class="texto" label="Tareas"></mwc-formfield>
+        <div id="tareas-jornada">
+        </div> 
       </div>
-      <div>
-        <mwc-formfield class="texto" label="Tareas"></mwc-formfield> 
-        <mwc-formfield label="Pickles">
-          <mwc-checkbox class="child"></mwc-checkbox>
-        </mwc-formfield>
-      </div>
-      <div class="mt-mb">
-        <mwc-button raised icon="check" label="Confirmar"></mwc-button>
+      <div class="mt-mb center">
+        <mwc-button id="confirmar-jornada" onclick="ConfirmarAddJornada()" raised icon="check" label="Confirmar"></mwc-button>
       </div>
     </div>
-    <div>
-    </div>
-    <mwc-button id= "snacker" label="Ha vuelto el snacker"></mwc-button>
-    <mwc-snackbar id="snack" labelText="Tarea x Finalizada">
-      <mwc-button id="iconButton" icon="close" slot="dismiss"></mwc-button>
+    <div id="snacker-tarea-div">
+      <mwc-snackbar id="snacktarea" labelText="Tarea agregada correctamente">
+      <!-- <mwc-button id="iconButton" icon="close" slot="dismiss"></mwc-button> -->
     </mwc-snackbar>
-    <div id="jornada-en-proceso">
-      
+    </div>
+    <div id="snacker-jornada-div">
+      <mwc-snackbar id="snackjornada" labelText="Jornada agregada correctamente">
+      <!-- <mwc-button id="iconButton" icon="close" slot="dismiss"></mwc-button> -->
+    </mwc-snackbar>
     </div>
     <div id="tarea-en-proceso">
-
     </div>
   </body>
 </html>

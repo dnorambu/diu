@@ -1,7 +1,7 @@
 var inicio=0;
 var timeout=0;
 var resta=0;
-function empezarDetener(elemento)
+function empezarDetener()
 {
     var lista = document.getElementById("lista");
     lista.children[0].setAttribute("disabled","true");
@@ -10,6 +10,21 @@ function empezarDetener(elemento)
     var min_de = document.getElementById("min-des");
     min_po.firstElementChild.setAttribute("disabled","true");
     min_de.firstElementChild.setAttribute("disabled","true");
+    // lista.children[1].children[1].getAttribute("aria-selected")=="true"
+    for (i = 0; i < lista.children[1].childElementCount; i++) {
+        console.log((lista.children[1].children[i].getAttribute("aria-selected").toLowerCase()==='true')==true);
+        if((lista.children[1].children[i].getAttribute("aria-selected").toLowerCase()==='true')==true){
+            var tarea_o_jornada = lista.children[1].children[i].lastChild.textContent;
+            if(lista_tareas.includes(tarea_o_jornada)){
+                console.log("entra al primer sub if")
+                document.getElementById("finalizar-tarea").style.display = "block";
+            } else {
+                console.log("entra al segundo sub if")
+                document.getElementById("finalizar-jornada").style.display = "block";
+            }
+            break;
+        }
+    }
 
     var manage_time =  document.getElementById("manage-time");
     manage_time.children[0].style.display = "none";
@@ -21,7 +36,6 @@ function empezarDetener(elemento)
     {
         // empezar el cronometro
 
-        elemento.value="Detener";
 
         // Obtenemos el valor actual
         inicio=vuelta=new Date(new Date().getTime() - 60000*new Date(resta).getMinutes() - (new Date(resta).getSeconds()+1)*1000);
@@ -31,8 +45,7 @@ function empezarDetener(elemento)
     }
 }
 
-function pausar(elemento){
-    elemento.value="Empezar";
+function pausar(){
     clearTimeout(timeout);
     timeout=0;
     var manage_time =  document.getElementById("manage-time");
@@ -41,8 +54,7 @@ function pausar(elemento){
     manage_time.children[2].style.display = "block";
 }
 
-function cancelar(elemento) {
-    elemento.value="Empezar";
+function cancelar() {
     clearTimeout(timeout);
     timeout=0;
     resta=0;
